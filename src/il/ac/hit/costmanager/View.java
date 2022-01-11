@@ -24,15 +24,15 @@ public class View implements IView
     private IViewModel viewModel;
     private JFrame frameMain;
     private JTable tableCostItems;
-    private DefaultListModel jListModel;
-    private JList jListCategories;
+    private DefaultListModel<String> jListModel;
+    private JList<String> jListCategories;
     private JScrollPane scrollPaneForItemsTable, scrollPaneForCategories;
     private DefaultTableModel defaultTableCostItems;
     private JButton buttonAddCostItem, buttonDeleteCostItem, buttonLogout, buttonAddCategory, buttonFilterCostItemsByDates;
     private JPanel panelAddItem, panelButtons, panelAddItemAndButtonsPanels;
     private JTextField textFieldCostSum, textFieldDescription, textFieldCurrency;
     private JTextArea textAreaCostSum, textAreaDescription, textAreaCategory, textAreaCurrency;
-    private String[] colNamesForTable = {"Category", "Description", "Cost SUM", "Currency", "Date Added"};
+    private final String[] colNamesForTable = {"Category", "Description", "Cost SUM", "Currency", "Date Added"};
     private String userName;
     private ArrayList<Category> currentCategoryList;
 
@@ -84,8 +84,8 @@ public class View implements IView
         tableCostItems.setRowSelectionAllowed(true);
         tableCostItems.setBackground(new Color(102, 178, 255));
         tableCostItems.getTableHeader().setBackground(new Color(0, 128, 255));
-        jListModel = new DefaultListModel();
-        jListCategories = new JList(jListModel);
+        jListModel = new DefaultListModel<>();
+        jListCategories = new JList<>(jListModel);
         scrollPaneForItemsTable = new JScrollPane(tableCostItems);
         scrollPaneForCategories = new JScrollPane(jListCategories);
         scrollPaneForItemsTable.getViewport().setBackground(new Color(204, 229, 255));
@@ -498,6 +498,7 @@ public class View implements IView
             filterFrame.add(mainPanel);
             filterFrame.setLocationRelativeTo(frameMain);
             filterFrame.setVisible(true);
+
         }
 
         /*
@@ -548,14 +549,9 @@ public class View implements IView
             loginFrame.setVisible(true);
             loginFrame.setLocationRelativeTo(frameMain);
 
-            loginButton.addActionListener(new ActionListener()
-            {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    userName = loginTextField.getText();
-                    loginFrame.dispose();
-                }
+            loginButton.addActionListener(e -> {
+                userName = loginTextField.getText();
+                loginFrame.dispose();
             });
         }
     }
